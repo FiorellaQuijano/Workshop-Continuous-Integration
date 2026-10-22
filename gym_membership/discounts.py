@@ -40,12 +40,16 @@ Tests:
 - Implement unit tests in tests/test_discounts.py.
 """
 
-def group_discounts(amount, members):
+
+def group_discount(amount, members):
+    """R4: Apply a 10% group discount for 2 or more members."""
     if members >= 2:
-        return amount - (amount * 0.1)
+        return amount * 0.90
     return amount
 
+
 def special_offer(amount):
+    """R5: Apply a special offer based on the amount."""
     if amount > 400:
         return amount - 50
     if amount > 200:
@@ -53,8 +57,8 @@ def special_offer(amount):
     return amount
 
 
-def premium_supercharge(amount, has_premium_extra):
-    """R6: Add a 15% surcharge if premium extras are selected."""
+def premium_surcharge(amount, has_premium_extra):
+    """R6: Add 15% if at least one premium extra is selected."""
     if has_premium_extra:
         return amount * 1.15
     return amount

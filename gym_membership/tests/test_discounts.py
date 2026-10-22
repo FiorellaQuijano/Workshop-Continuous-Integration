@@ -39,20 +39,19 @@ Note:
 Run tests using:
     python -m pytest -v
 """
+import pytest
 
 
-
-from discounts import (
+from gym_membership.discounts import (
     group_discount,
     special_offer,
     premium_surcharge,
 )
 
-
 def test_group_discount():
     assert group_discount(100, 1) == 100
-    assert group_discount(100, 2) == 90
-    assert group_discount(200, 3) == 180
+    assert group_discount(100, 2) == pytest.approx(90)
+    assert group_discount(200, 3) == pytest.approx(180)
 
 
 def test_special_offer():
@@ -62,8 +61,10 @@ def test_special_offer():
     assert special_offer(401) == 351
 
 
+
 def test_premium_surcharge():
     assert premium_surcharge(100, False) == 100
-    assert premium_surcharge(100, True) == 115
-    assert premium_surcharge(200, True) == 230
+    assert premium_surcharge(100, True) == pytest.approx(115)
+    assert premium_surcharge(200, True) == pytest.approx(230)
+
 
