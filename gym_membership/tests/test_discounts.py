@@ -39,3 +39,31 @@ Note:
 Run tests using:
     python -m pytest -v
 """
+
+
+
+from discounts import (
+    group_discount,
+    special_offer,
+    premium_surcharge,
+)
+
+
+def test_group_discount():
+    assert group_discount(100, 1) == 100
+    assert group_discount(100, 2) == 90
+    assert group_discount(200, 3) == 180
+
+
+def test_special_offer():
+    assert special_offer(200) == 200
+    assert special_offer(201) == 181
+    assert special_offer(400) == 380
+    assert special_offer(401) == 351
+
+
+def test_premium_surcharge():
+    assert premium_surcharge(100, False) == 100
+    assert premium_surcharge(100, True) == 115
+    assert premium_surcharge(200, True) == 230
+

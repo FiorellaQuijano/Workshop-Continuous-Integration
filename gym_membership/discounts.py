@@ -39,3 +39,24 @@ Integration:
 Tests:
 - Implement unit tests in tests/test_discounts.py.
 """
+
+def group_discounts(amount, members):
+    if members >= 2:
+        return amount - (amount * 0.1)
+    return amount
+
+def special_offer(amount):
+    if amount > 400:
+        return amount - 50
+    if amount > 200:
+        return amount - 20
+    return amount
+
+
+def premium_supercharge(amount, has_premium_extra):
+    """R6: Add a 15% surcharge if premium extras are selected."""
+    if has_premium_extra:
+        return amount * 1.15
+    return amount
+
+
