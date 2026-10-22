@@ -39,8 +39,7 @@ Note:
 Run tests using:
     python -m pytest -v
 """
-import pytest
-
+from decimal import Decimal
 
 from gym_membership.discounts import (
     group_discount,
@@ -48,23 +47,31 @@ from gym_membership.discounts import (
     premium_surcharge,
 )
 
+
 def test_group_discount():
-    assert group_discount(100, 1) == 100
-    assert group_discount(100, 2) == pytest.approx(90)
-    assert group_discount(200, 3) == pytest.approx(180)
+    """Discount group totals by ten percent for two or more members."""
+    assert group_discount(Decimal("100"), 1) == Decimal("100")
+    assert group_discount(Decimal("100"), 2) == Decimal("90")
+    assert group_discount(Decimal("200"), 3) == Decimal("180")
 
 
 def test_special_offer():
-    assert special_offer(200) == 200
-    assert special_offer(201) == 181
-    assert special_offer(400) == 380
-    assert special_offer(401) == 351
-
+    """Apply the correct exclusive offer at each amount threshold."""
+    assert special_offer(Decimal("200")) == Decimal("200")
+    assert special_offer(Decimal("201")) == Decimal("181")
+    assert special_offer(Decimal("400")) == Decimal("380")
+    assert special_offer(Decimal("401")) == Decimal("351")
 
 
 def test_premium_surcharge():
-    assert premium_surcharge(100, False) == 100
-    assert premium_surcharge(100, True) == pytest.approx(115)
-    assert premium_surcharge(200, True) == pytest.approx(230)
+    """Add fifteen percent only when a premium extra is selected."""
+    assert premium_surcharge(Decimal("100"), False) == Decimal("100")
+    assert premium_surcharge(Decimal("100"), True) == Decimal("115")
+    assert premium_surcharge(Decimal("200"), True) == Decimal("230")
 
 
+def test_discounts_accept_integer_amounts():
+    """Accept integer amounts while retaining exact decimal arithmetic."""
+    assert group_discount(100, 2) == Decimal("90")
+    assert special_offer(201) == Decimal("181")
+    assert premium_surcharge(100, True) == Decimal("115")

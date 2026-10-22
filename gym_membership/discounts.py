@@ -40,27 +40,30 @@ Tests:
 - Implement unit tests in tests/test_discounts.py.
 """
 
+from decimal import Decimal
 
-def group_discount(amount, members):
+
+def group_discount(amount: Decimal | int, members: int) -> Decimal:
     """R4: Apply a 10% group discount for 2 or more members."""
+    amount = Decimal(amount)
     if members >= 2:
-        return amount * 0.90
+        return amount * Decimal("0.90")
     return amount
 
 
-def special_offer(amount):
+def special_offer(amount: Decimal | int) -> Decimal:
     """R5: Apply a special offer based on the amount."""
-    if amount > 400:
-        return amount - 50
-    if amount > 200:
-        return amount - 20
+    amount = Decimal(amount)
+    if amount > Decimal("400"):
+        return amount - Decimal("50")
+    if amount > Decimal("200"):
+        return amount - Decimal("20")
     return amount
 
 
-def premium_surcharge(amount, has_premium_extra):
+def premium_surcharge(amount: Decimal | int, has_premium_extra: bool) -> Decimal:
     """R6: Add 15% if at least one premium extra is selected."""
+    amount = Decimal(amount)
     if has_premium_extra:
-        return amount * 1.15
+        return amount * Decimal("1.15")
     return amount
-
-
